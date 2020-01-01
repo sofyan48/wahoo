@@ -11,21 +11,17 @@ type Producer struct {
 	session *kinesis.Kinesis
 	config  *entity.AwsConfig
 	awsLibs *libs.Aws
-	shardID string
-	// MsgOutput *sqs.ReceiveMessageOutput
-	// Worker    int
 }
 
 // NewProducer pubs Data
 // @client: *entity.NewClient
 // @shardID: string
 // return *Consumer
-func NewProducer(client *entity.NewClient, shardID string) *Producer {
+func NewProducer(client *entity.NewClient) *Producer {
 	pubs := &Producer{}
 	pubs.config = client.Configs
 	pubs.session = client.Sessions
 	pubs.awsLibs = &libs.Aws{}
-	pubs.shardID = shardID
 	return pubs
 }
 
