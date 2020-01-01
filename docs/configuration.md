@@ -5,20 +5,17 @@ return config
 ```
 config.Configure()
 ```
-Object 
-```
-AwsAccessKeyID string
-AwsSecretAccessKey string
-APArea = os.Getenv("REGION")
-StreamName = os.Getenv("STREAM_NAME")
-ShardID = os.Getenv("SHARD_ID")
-
-```
+setting up this configuration :
+- AwsAccessKeyID string
+- AwsSecretAccessKey string
+- APArea string
+- StreamName string
+- ShardID string
 
 ## Credential
 return config
 ```
-config.NewConfig().Credential(cfg)
+config.NewConfig().Credential(config)
 ```
 
 ## client 
