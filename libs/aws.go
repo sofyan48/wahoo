@@ -22,11 +22,27 @@ func (aw *Aws) Sessions(cfg *entity.AwsConfig) *kinesis.Kinesis {
 // GetShardID global Shard ID
 // @cfg: *entity.AwsConfig
 // return *kinesis.GetShardIteratorOutput
-func (aw *Aws) GetShardID(svc *kinesis.Kinesis, cfg *entity.AwsConfig) (*kinesis.GetShardIteratorOutput, error) {
+func (aw *Aws) GetShardID(svc *kinesis.Kinesis, cfg *entity.AwsConfig, shardType string) (*kinesis.GetShardIteratorOutput, error) {
 	dsIter := &kinesis.GetShardIteratorInput{}
 	dsIter.SetStreamName(cfg.StreamName)
 	dsIter.SetShardId(cfg.ShardID)
-	dsIter.SetShardIteratorType("TRIM_HORIZON")
+	dsIter.SetShardIteratorType(shardType)
 	shardIter, err := svc.GetShardIterator(dsIter)
 	return shardIter, err
+}
+
+// GetMessagesInput ...
+func (aw *Aws) GetMessagesInput() *kinesis.PutRecordInput {
+	return &kinesis.PutRecordInput{}
+}
+
+// Send ...
+func (aw *Aws) Send(svc *kinesis.Kinesis, data *kinesis.PutRecordInput) (*kinesis.PutRecordOutput, error) {
+	req, err := svc.PutRecord(data)
+	// if err != nil {
+	// 	fmt.Println("Error Cuk : ", err)
+	// 	os.Exit(0)
+	// }
+	// fmt.Println("Put Record : ", *req.ShardId)
+	return req, err
 }
