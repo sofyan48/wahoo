@@ -33,3 +33,11 @@ func (subs *Subscriber) GetRecord() (*kinesis.GetRecordsOutput, error) {
 	msgInput.SetShardIterator(subs.shardIter)
 	return subs.awsLibs.GetRecord(subs.session, msgInput)
 }
+
+// GetByShard ...
+func (subs *Subscriber) GetByShard(arn string) (*kinesis.SubscribeToShardOutput, error) {
+	data := &kinesis.SubscribeToShardInput{}
+	data.SetShardId(subs.config.ShardID)
+	data.SetConsumerARN(arn)
+	return subs.session.SubscribeToShard(data)
+}
