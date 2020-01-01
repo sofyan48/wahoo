@@ -52,3 +52,14 @@ func (aw *Aws) GetRecord(svc *kinesis.Kinesis, data *kinesis.GetRecordsInput) (*
 	records, err := svc.GetRecords(data)
 	return records, err
 }
+
+// GetDescribeInput ...
+func (aw *Aws) GetDescribeInput() *kinesis.DescribeStreamInput {
+	return &kinesis.DescribeStreamInput{}
+}
+
+// Describe ...
+func (aw *Aws) Describe(svc *kinesis.Kinesis, data *kinesis.DescribeStreamInput) (*kinesis.DescribeStreamOutput, error) {
+	descData, err := svc.DescribeStream(data)
+	return descData, err
+}
