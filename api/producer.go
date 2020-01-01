@@ -33,3 +33,11 @@ func (pubs *Producer) Publish(data []byte, partitionKey string) (*kinesis.PutRec
 	msgInput.SetData(data)
 	return pubs.awsLibs.Send(pubs.session, msgInput)
 }
+
+// ProducerAddTags ...
+func (pubs *Producer) ProducerAddTags(tags map[string]*string) (*kinesis.AddTagsToStreamOutput, error) {
+	data := &kinesis.AddTagsToStreamInput{}
+	data.SetStreamName(pubs.config.StreamName)
+	data.SetTags(tags)
+	return pubs.session.AddTagsToStream(data)
+}
