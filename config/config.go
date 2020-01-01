@@ -50,8 +50,8 @@ func (cfg *Configs) New() *entity.NewClient {
 	return clients
 }
 
-// GetShardID ..
-func (cfg *Configs) GetShardID(client *entity.NewClient, shardType string) (string, error) {
+// GetShardIterator ..
+func (cfg *Configs) GetShardIterator(client *entity.NewClient, shardType string) (string, error) {
 	awsLibs := &libs.Aws{}
 	awsCfg := &entity.AwsConfig{}
 	awsCfg.AwsAccessKeyID = client.Configs.AwsAccessKeyID
@@ -59,6 +59,6 @@ func (cfg *Configs) GetShardID(client *entity.NewClient, shardType string) (stri
 	awsCfg.APArea = client.Configs.APArea
 	awsCfg.ShardID = client.Configs.ShardID
 	awsCfg.StreamName = client.Configs.StreamName
-	shard, err := awsLibs.GetShardID(client.Sessions, awsCfg, shardType)
+	shard, err := awsLibs.GetShardIterator(client.Sessions, awsCfg, shardType)
 	return *shard.ShardIterator, err
 }
