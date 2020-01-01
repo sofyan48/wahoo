@@ -7,7 +7,6 @@ import (
 
 // Configs ...
 type Configs struct {
-	PathURL            string
 	AwsAccessKeyID     string
 	AwsSecretAccessKey string
 	AwsAPArea          string
@@ -27,12 +26,11 @@ func NewConfig() *Configs {
 
 // Credential client
 func (cfg *Configs) Credential(awsCfg *entity.AwsConfig) *Configs {
-	cfg.PathURL = awsCfg.PathURL
 	cfg.AwsAccessKeyID = awsCfg.AwsAccessKeyID
 	cfg.AwsSecretAccessKey = awsCfg.AwsSecretAccessKey
 	cfg.AwsAPArea = awsCfg.APArea
-	awsCfg.ShardID = cfg.ShardID
-	awsCfg.StreamName = cfg.StreamName
+	cfg.ShardID = awsCfg.ShardID
+	cfg.StreamName = awsCfg.StreamName
 	return cfg
 }
 
@@ -41,7 +39,6 @@ func (cfg *Configs) New() *entity.NewClient {
 	clients := &entity.NewClient{}
 	awsLibs := &libs.Aws{}
 	awsCfg := &entity.AwsConfig{}
-	awsCfg.PathURL = cfg.PathURL
 	awsCfg.AwsAccessKeyID = cfg.AwsAccessKeyID
 	awsCfg.AwsSecretAccessKey = cfg.AwsSecretAccessKey
 	awsCfg.APArea = cfg.AwsAPArea
@@ -51,4 +48,17 @@ func (cfg *Configs) New() *entity.NewClient {
 	clients.Sessions = kinesis
 	clients.Configs = awsCfg
 	return clients
+}
+
+// GetShardID ..
+func (cfg *Configs) GetShardID(client *entity.NewClient, shardType string) (string, error) {
+	awsLibs := &libs.Aws{}
+	awsCfg := &entity.AwsConfig{}
+	awsCfg.AwsAccessKeyID = client.Configs.AwsAccessKeyID
+	awsCfg.AwsSecretAccessKey = client.Configs.AwsSecretAccessKey
+	awsCfg.APArea = client.Configs.APArea
+	awsCfg.ShardID = client.Configs.ShardID
+	awsCfg.StreamName = client.Configs.StreamName
+	shard, err := awsLibs.GetShardID(client.Sessions, awsCfg, shardType)
+	return *shard.ShardIterator, err
 }
