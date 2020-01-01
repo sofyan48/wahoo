@@ -13,22 +13,31 @@ type Delete struct {
 	streamName string
 }
 
-// NewDelete cr Data
+// NewDelete dlt Data
 // @client: *entity.NewClient
 // @shardID: string
 // return *Consumer
 func NewDelete(client *entity.NewClient) *Delete {
-	cr := &Delete{}
-	// cr.config = client.Configs
-	cr.session = client.Sessions
-	cr.awsLibs = &libs.Aws{}
-	return cr
+	dlt := &Delete{}
+	// dlt.config = client.Configs
+	dlt.session = client.Sessions
+	dlt.awsLibs = &libs.Aws{}
+	return dlt
 }
 
 // DeleteStream ...
-func (cr *Delete) DeleteStream(streamName string) (*kinesis.DeleteStreamOutput, error) {
+func (dlt *Delete) DeleteStream(streamName string) (*kinesis.DeleteStreamOutput, error) {
 	data := &kinesis.DeleteStreamInput{}
 	data.SetStreamName(streamName)
-	cr.streamName = streamName
-	return cr.session.DeleteStream(data)
+	dlt.streamName = streamName
+	return dlt.session.DeleteStream(data)
+}
+
+// DeleteStreamConsumer ...
+func (dlt *Delete) DeleteStreamConsumer(arn, csmArn, name string) (*kinesis.DeregisterStreamConsumerOutput, error) {
+	data := &kinesis.DeregisterStreamConsumerInput{}
+	data.SetConsumerARN(csmArn)
+	data.SetStreamARN(arn)
+	data.SetConsumerName(name)
+	return dlt.session.DeregisterStreamConsumer(data)
 }
