@@ -34,6 +34,19 @@ func (pubs *Producer) Publish(data []byte, partitionKey string) (*kinesis.PutRec
 	return pubs.awsLibs.Send(pubs.session, msgInput)
 }
 
+// FormatPutRecordsInput ...
+func (pubs *Producer) FormatPutRecordsInput() *kinesis.PutRecordsInput {
+	return &kinesis.PutRecordsInput{}
+}
+
+// BulkPublish ..
+func (pubs *Producer) BulkPublish(data []*kinesis.PutRecordsRequestEntry) (*kinesis.PutRecordsOutput, error) {
+	msgInput := &kinesis.PutRecordsInput{}
+	msgInput.SetStreamName(pubs.config.StreamName)
+	msgInput.SetRecords(data)
+	return pubs.session.PutRecords(msgInput)
+}
+
 // ProducerAddTags ...
 func (pubs *Producer) ProducerAddTags(tags map[string]*string) (*kinesis.AddTagsToStreamOutput, error) {
 	data := &kinesis.AddTagsToStreamInput{}
