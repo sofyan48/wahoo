@@ -6,8 +6,8 @@ import (
 	"github.com/sofyan48/wahoo/libs"
 )
 
-// Publisher ...
-type Publisher struct {
+// Producer ...
+type Producer struct {
 	session *kinesis.Kinesis
 	config  *entity.AwsConfig
 	awsLibs *libs.Aws
@@ -16,11 +16,12 @@ type Publisher struct {
 	// Worker    int
 }
 
-// NewPublisher pubs Data
+// NewProducer pubs Data
 // @client: *entity.NewClient
+// @shardID: string
 // return *Consumer
-func NewPublisher(client *entity.NewClient, shardID string) *Publisher {
-	pubs := &Publisher{}
+func NewProducer(client *entity.NewClient, shardID string) *Producer {
+	pubs := &Producer{}
 	pubs.config = client.Configs
 	pubs.session = client.Sessions
 	pubs.awsLibs = &libs.Aws{}
@@ -29,7 +30,7 @@ func NewPublisher(client *entity.NewClient, shardID string) *Publisher {
 }
 
 // Publish ..
-func (pubs *Publisher) Publish(data []byte, partitionKey string) (*kinesis.PutRecordOutput, error) {
+func (pubs *Producer) Publish(data []byte, partitionKey string) (*kinesis.PutRecordOutput, error) {
 	msgInput := pubs.awsLibs.GetMessagesInput()
 	msgInput.SetStreamName(pubs.config.StreamName)
 	msgInput.SetPartitionKey(partitionKey)
