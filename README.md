@@ -2,10 +2,10 @@
 Data Streamer with AWS Kinesis
 
 
-## GETTING STARTED
+## Getting Started
 ### Install
 ```bash
-$go get github.com/sofyan48/wahoo
+go get github.com/sofyan48/wahoo
 ```
 
 ### Producer
@@ -38,7 +38,7 @@ func main() {
 		os.Exit(0)
 	}
 	producer := api.NewProducer(client, shardID)
-	data := []byte("{\"type\": \"json\",\"value\": {\"CompanyCode\": \"12345\",\"CustomerNumber\": \"ABC0012300DEF\",\"RequestID\": \"201507131507262221400000001975\",\"ChannelType\": \"6014\",\"CustomerName\": \"Customer BCA Virtual Account\",\"CurrencyCode\": \"IDR\",\"PaidAmount\": \"150000.00\",\"TotalAmount\": \"150000.00\",\"SubCompany\": \"00000\",\"TransactionDate\": \"15/03/2014 22:07:40\",\"Reference\": \"1234567890\",\"DetailBills\": [],\"FlagAdvide\": \"N\",\"Additionaldata\": \"\"}\n}")
+	data := []byte("{\"data\": {\"CompanyCode\": \"12345\",\"CustomerNumber\": \"ABC0012300DEF\",\"RequestID\": \"201507131507262221400000001975\",\"ChannelType\": \"6014\",\"CustomerName\": \"Customer BCA Virtual Account\",\"CurrencyCode\": \"IDR\",\"PaidAmount\": \"150000.00\",\"TotalAmount\": \"150000.00\",\"SubCompany\": \"00000\",\"TransactionDate\": \"15/03/2014 22:07:40\",\"Reference\": \"1234567890\",\"DetailBills\": [],\"FlagAdvide\": \"N\",\"Additionaldata\": \"\"}\n}")
 
 	response, err := producer.Publish(data, "keys")
 	if err != nil {
