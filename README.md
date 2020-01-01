@@ -50,7 +50,7 @@ func main() {
 
 ```
 
-### Subscriber
+### Consumer
 ```golang
 package main
 
@@ -78,7 +78,7 @@ func main() {
 		fmt.Println("Error :", err)
 		os.Exit(0)
 	}
-	consumer := api.NewSubscriber(client, shardIter)
+	consumer := api.NewConsumer(client, shardIter)
 	data, err := consumer.GetRecord()
 	if err != nil {
 		fmt.Println("Error :", err)

@@ -14,11 +14,11 @@ type Subscriber struct {
 	shardIter string
 }
 
-// NewSubscriber subs Data
+// NewConsumer subs Data
 // @client: *entity.NewClient
 // @shardID: string
 // return *Consumer
-func NewSubscriber(client *entity.NewClient, shardIterator string) *Subscriber {
+func NewConsumer(client *entity.NewClient, shardIterator string) *Subscriber {
 	subs := &Subscriber{}
 	subs.config = client.Configs
 	subs.session = client.Sessions
