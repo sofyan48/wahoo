@@ -1,0 +1,13 @@
+package libs
+
+// Aws ...
+type Aws struct{}
+
+// Broker ...
+type Broker struct{}
+
+// Pubs ...
+type Pubs struct{}
+
+// Subs ...
+type Subs struct{}
