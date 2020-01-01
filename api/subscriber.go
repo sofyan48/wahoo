@@ -41,3 +41,11 @@ func (subs *Subscriber) GetByShard(arn string) (*kinesis.SubscribeToShardOutput,
 	data.SetConsumerARN(arn)
 	return subs.session.SubscribeToShard(data)
 }
+
+// Register ...
+func (subs *Subscriber) Register(arn string) (*kinesis.RegisterStreamConsumerOutput, error) {
+	data := &kinesis.RegisterStreamConsumerInput{}
+	data.SetConsumerName(subs.config.StreamName)
+	data.SetStreamARN(arn)
+	return subs.session.RegisterStreamConsumer(data)
+}

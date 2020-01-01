@@ -41,3 +41,11 @@ func (cr *Create) AddTags(tags map[string]*string) (*kinesis.AddTagsToStreamOutp
 	data.SetTags(tags)
 	return cr.session.AddTagsToStream(data)
 }
+
+// Register ...
+func (cr *Create) Register(arn string) (*kinesis.RegisterStreamConsumerOutput, error) {
+	data := &kinesis.RegisterStreamConsumerInput{}
+	data.SetConsumerName(cr.streamName)
+	data.SetStreamARN(arn)
+	return cr.session.RegisterStreamConsumer(data)
+}
