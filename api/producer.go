@@ -31,6 +31,5 @@ func (pubs *Producer) Publish(data []byte, partitionKey string) (*kinesis.PutRec
 	msgInput.SetStreamName(pubs.config.StreamName)
 	msgInput.SetPartitionKey(partitionKey)
 	msgInput.SetData(data)
-	resp, err := pubs.awsLibs.Send(pubs.session, msgInput)
-	return resp, err
+	return pubs.awsLibs.Send(pubs.session, msgInput)
 }

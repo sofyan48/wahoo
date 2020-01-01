@@ -31,6 +31,5 @@ func NewSubscriber(client *entity.NewClient, shardIterator string) *Subscriber {
 func (subs *Subscriber) GetRecord() (*kinesis.GetRecordsOutput, error) {
 	msgInput := subs.awsLibs.GetRecordInput()
 	msgInput.SetShardIterator(subs.shardIter)
-	data, err := subs.awsLibs.GetRecord(subs.session, msgInput)
-	return data, err
+	return subs.awsLibs.GetRecord(subs.session, msgInput)
 }
